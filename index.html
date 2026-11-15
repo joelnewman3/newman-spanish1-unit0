@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spanish 1 — Unit 0 Interactive Practice</title>
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME TOKENS
+       Self-contained system typography & accessible classroom palette
+       ========================================================================== */
+    :root {
+      --bg-page: #f4f6fb;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-accent-btn: #eef2ff;
+      --bg-accent-btn-hover: #e0e7ff;
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+      --border-light: #e2e8f0;
+      --primary: #3b5bfd;
+      --primary-hover: #2b47e0;
+      --primary-light: #eef2ff;
+      --success: #0d9488;
+      --success-bg: #f0fdfa;
+      --success-border: #99f6e4;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --mode-a-color: #2563eb;
+      --mode-a-bg: #eff6ff;
+      --mode-b-color: #7c3aed;
+      --mode-b-bg: #f5f3ff;
+      --mode-c-color: #059669;
+      --mode-c-bg: #ecfdf5;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.08);
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.45;
+      padding: 12px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Compact container sized cleanly for Schoology iframes (~700px height) */
+    .app-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       HEADER & GLOBAL CONTROLS
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .app-title-group h1 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .app-title-group p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .global-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .btn-control {
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-control:hover {
+      border-color: var(--primary);
+      background-color: var(--bg-subtle);
+    }
+
+    .btn-control.active-mode {
+      background-color: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+       ACTIVITY MODE SELECTOR (ALL / TRANSLATE / PATTERNS / DIALOGUE)
+       ========================================================================== */
+    .mode-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .mode-btn {
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 7px 8px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .mode-btn span.mode-sub {
+      font-size: 0.67rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    .mode-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .mode-btn.active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(59, 91, 253, 0.25);
+    }
+
+    /* Thematic Topic Filter Pills */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .tab-btn {
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background-color: #1e293b;
+      border-color: #1e293b;
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       ENGLISH STATISTICS DASHBOARD (4 CARDS)
+       ========================================================================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 7px 8px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      margin-bottom: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .stat-value.highlight-primary {
+      color: var(--primary);
+    }
+
+    .stat-value.highlight-success {
+      color: var(--success);
+    }
+
+    .stat-sub {
+      font-size: 0.69rem;
+      color: var(--text-secondary);
+    }
+
+    /* Progress Bar */
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background-color: var(--border-light);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #6366f1);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* ==========================================================================
+       MAIN FLASHCARD AREA
+       ========================================================================== */
+    .flashcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 16px 20px;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+
+    .flashcard.state-correct {
+      border-color: var(--success);
+    }
+
+    .flashcard.state-incorrect {
+      border-color: var(--error);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge-mode {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .badge-mode.mode-translate {
+      background-color: var(--mode-a-bg);
+      color: var(--mode-a-color);
+    }
+
+    .badge-mode.mode-pattern {
+      background-color: var(--mode-b-bg);
+      color: var(--mode-b-color);
+    }
+
+    .badge-mode.mode-dialogue {
+      background-color: var(--mode-c-bg);
+      color: var(--mode-c-color);
+    }
+
+    .badge-topic {
+      background-color: #f1f5f9;
+      color: var(--text-secondary);
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .badge-attempt {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .badge-attempt.first-try {
+      background-color: #f1f5f9;
+      color: var(--text-secondary);
+    }
+
+    .badge-attempt.retry {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+    }
+
+    .badge-attempt.mastered-first {
+      background-color: var(--success-bg);
+      color: var(--success);
+      border: 1px solid var(--success-border);
+    }
+
+    /* Instruction & Prompt Area */
+    .task-instruction {
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .prompt-box {
+      font-size: 1.32rem;
+      font-weight: 700;
+      line-height: 1.55;
+      color: var(--text-primary);
+      text-align: center;
+      padding: 10px 14px;
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+    }
+
+    .dialogue-bubble {
+      display: inline-block;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 8px 16px;
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+    }
+
+    .hint-row {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-hint {
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: 1px solid #c7d2fe;
+      border-radius: 999px;
+      padding: 3px 11px;
+      cursor: pointer;
+    }
+
+    .btn-hint:hover {
+      background: #e0e7ff;
+    }
+
+    .hint-text {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 3px 10px;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+
+    /* ==========================================================================
+       MULTIPLE CHOICE OPTIONS GRID (2x2)
+       ========================================================================== */
+    .mc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .mc-option {
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.13s ease;
+    }
+
+    .mc-option:hover:not(:disabled) {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .mc-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .mc-option.opt-correct {
+      background-color: var(--success-bg);
+      border-color: var(--success);
+      color: #0f766e;
+    }
+
+    .mc-option.opt-correct .mc-key {
+      background-color: var(--success);
+      border-color: var(--success);
+      color: #ffffff;
+    }
+
+    .mc-option.opt-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: #b91c1c;
+    }
+
+    .mc-option.opt-wrong .mc-key {
+      background-color: var(--error);
+      border-color: var(--error);
+      color: #ffffff;
+    }
+
+    .mc-option:disabled {
+      cursor: default;
+    }
+
+    /* ==========================================================================
+       TYPING MODE INPUT & SPANISH ACCENT TOOLBAR
+       ========================================================================== */
+    .typing-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .typing-area.visible {
+      display: flex;
+    }
+
+    .type-input {
+      font-family: inherit;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background-color: var(--bg-subtle);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 9px 14px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      margin-bottom: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .type-input:focus {
+      outline: none;
+      background-color: #eef2ff;
+      box-shadow: 0 3px 10px rgba(59, 91, 253, 0.15);
+    }
+
+    .type-input.input-correct {
+      background-color: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .type-input.input-incorrect {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .accent-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .accent-btn {
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      min-width: 34px;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #c7d2fe;
+      background-color: var(--bg-accent-btn);
+      color: var(--primary);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accent-btn:hover {
+      background-color: var(--bg-accent-btn-hover);
+      border-color: var(--primary);
+    }
+
+    /* ==========================================================================
+       FEEDBACK BANNER & ACTION BUTTONS
+       ========================================================================== */
+    .feedback-banner {
+      display: none;
+      padding: 9px 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .feedback-banner.visible {
+      display: block;
+    }
+
+    .feedback-banner.success {
+      background-color: var(--success-bg);
+      color: #0f766e;
+      border: 1px solid var(--success-border);
+    }
+
+    .feedback-banner.warning {
+      background-color: var(--warning-bg);
+      color: #b45309;
+      border: 1px solid var(--warning-border);
+    }
+
+    .feedback-banner.error {
+      background-color: var(--error-bg);
+      color: #b91c1c;
+      border: 1px solid var(--error-border);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 8px 15px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      min-width: 130px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-success {
+      background-color: var(--success);
+      color: #ffffff;
+      min-width: 130px;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background-color: #0f766e;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-subtle);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background-color: var(--border-light);
+    }
+
+    .keyboard-tip {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    kbd {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       END OF DECK SUMMARY SCREEN
+       ========================================================================== */
+    .summary-screen {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    .summary-screen.visible {
+      display: block;
+    }
+
+    .summary-screen h2 {
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .summary-screen p {
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+    }
+
+    .summary-score-ring {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 5px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .summary-score-ring .big-pct {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+
+    .summary-score-ring .ring-label {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .summary-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .breakdown-pill {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 7px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .mode-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-box {
+        font-size: 1.12rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header & Global Controls -->
+    <header class="top-bar">
+      <div class="app-title-group">
+        <h1>Spanish 1 — Unit 0 Interactive Practice</h1>
+        <p>Greetings, introductions, feelings, calendar, weather &amp; numbers.</p>
+      </div>
+      <div class="global-actions">
+        <button type="button" id="btnInputMode" class="btn-control" title="Switch between Multiple Choice and Typing">
+          🔤 Mode: Multiple Choice
+        </button>
+        <button type="button" id="btnShuffle" class="btn-control active-mode" title="Shuffle deck">
+          🔀 Shuffle: On
+        </button>
+        <button type="button" id="btnPracticeMissed" class="btn-control" style="display: none;" title="Practice cards missed on the first attempt">
+          🎯 Missed (<span id="missedCountBadge">0</span>)
+        </button>
+        <button type="button" id="btnReset" class="btn-control" title="Reset progress">
+          ↺ Reset
+        </button>
+      </div>
+    </header>
+
+    <!-- 3 Learning Activity Modes + Mixed -->
+    <section class="mode-bar" id="modeBar" aria-label="Activity mode">
+      <button type="button" class="mode-btn active" data-mode="ALL">
+        <span>All Activities</span>
+        <span class="mode-sub">Mixed Practice</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="translate">
+        <span>A. Direct Translation</span>
+        <span class="mode-sub">English → Spanish</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="pattern">
+        <span>B. Sequences &amp; Logic</span>
+        <span class="mode-sub">Order &amp; Patterns</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="dialogue">
+        <span>C. Mini-Dialogues</span>
+        <span class="mode-sub">Pick a Logical Reply</span>
+      </button>
+    </section>
+
+    <!-- Thematic Unit 0 Topic Pills -->
+    <nav class="filter-tabs" id="filterTabs" aria-label="Unit 0 topic filter">
+      <button type="button" class="tab-btn active" data-topic="ALL">All Topics</button>
+      <button type="button" class="tab-btn" data-topic="greetings">Greetings &amp; Goodbyes</button>
+      <button type="button" class="tab-btn" data-topic="intros">Intros &amp; Classroom</button>
+      <button type="button" class="tab-btn" data-topic="feelings">Feelings</button>
+      <button type="button" class="tab-btn" data-topic="calendar">Days, Months &amp; Time</button>
+      <button type="button" class="tab-btn" data-topic="weather">Seasons &amp; Weather</button>
+      <button type="button" class="tab-btn" data-topic="numbers">Numbers (0–100)</button>
+    </nav>
+
+    <!-- Live Performance Dashboard -->
+    <section class="stats-grid" aria-label="Progress statistics">
+      <div class="stat-card">
+        <div class="stat-label">Score on First Attempt</div>
+        <div class="stat-value highlight-primary" id="statFirstTryPct">—</div>
+        <div class="stat-sub" id="statFirstTryFraction">0 of 0 attempted</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" id="statCompleted">0 / 0</div>
+        <div class="stat-sub" id="statRemaining">0 remaining</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Current Streak</div>
+        <div class="stat-value highlight-success" id="statStreak">0</div>
+        <div class="stat-sub" id="statBestStreak">Best: 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Actual Score</div>
+        <div class="stat-value" id="statActualScore">—</div>
+        <div class="stat-sub" id="statActualFraction">0 of 0 correct</div>
+      </div>
+    </section>
+
+    <!-- Visual Progress Bar -->
+    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBarTrack">
+      <div class="progress-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Main Flashcard Interface -->
+    <main class="flashcard" id="flashcardBox">
+      <div class="card-meta">
+        <div class="meta-left">
+          <span class="badge-mode mode-translate" id="cardModeBadge">A. Direct Translation</span>
+          <span class="badge-topic" id="cardTopicBadge">Greetings</span>
+          <span id="cardCounterText">Card 1 of 100</span>
+        </div>
+        <span class="badge-attempt first-try" id="cardAttemptBadge">First Attempt</span>
+      </div>
+
+      <div class="task-instruction" id="taskInstruction">
+        How do you say this in Spanish?
+      </div>
+
+      <div class="prompt-box" id="promptContainer">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Optional English Hint (used in Pattern & Dialogue modes for novice scaffolding) -->
+      <div class="hint-row" id="hintRow" style="display: none;">
+        <button type="button" class="btn-hint" id="btnShowHint">💡 Need an English hint?</button>
+        <span class="hint-text" id="hintText" style="display: none;"></span>
+      </div>
+
+      <!-- Multiple Choice 2x2 Options -->
+      <div class="mc-grid" id="mcContainer">
+        <!-- 4 option buttons populated dynamically -->
+      </div>
+
+      <!-- Typing Input Area (shown when Mode: Typing is toggled on) -->
+      <div class="typing-area" id="typingContainer">
+        <input
+          type="text"
+          id="answerInput"
+          class="type-input"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="Type your Spanish answer..."
+          aria-label="Type your Spanish answer"
+        />
+        <div class="accent-buttons" role="group" aria-label="Insert Spanish characters">
+          <button type="button" class="accent-btn" data-char="á">á</button>
+          <button type="button" class="accent-btn" data-char="é">é</button>
+          <button type="button" class="accent-btn" data-char="í">í</button>
+          <button type="button" class="accent-btn" data-char="ó">ó</button>
+          <button type="button" class="accent-btn" data-char="ú">ú</button>
+          <button type="button" class="accent-btn" data-char="ñ">ñ</button>
+          <button type="button" class="accent-btn" data-char="¿">¿</button>
+          <button type="button" class="accent-btn" data-char="¡">¡</button>
+        </div>
+      </div>
+
+      <!-- Immediate Grading Feedback -->
+      <div class="feedback-banner" id="feedbackBanner" role="status" aria-live="polite"></div>
+
+      <!-- Navigation & Action Row -->
+      <div class="action-row">
+        <button type="button" class="btn btn-secondary" id="btnPrev">← Previous</button>
+        <button type="button" class="btn btn-primary" id="btnCheck" style="display: none;">Check Answer</button>
+        <button type="button" class="btn btn-secondary" id="btnReveal">Show Answer</button>
+        <button type="button" class="btn btn-success" id="btnNext">Next →</button>
+      </div>
+
+      <div class="keyboard-tip" id="keyboardTip">
+        Tip: Click an option (or press <kbd>1</kbd>–<kbd>4</kbd>), then press <kbd>Enter</kbd> for the next card.
+      </div>
+    </main>
+
+    <!-- End-of-Deck Summary Screen -->
+    <section class="summary-screen" id="summaryScreen">
+      <h2>Great Job! Set Complete!</h2>
+      <p id="summarySubtitle">You finished all cards in this set.</p>
+
+      <div class="summary-score-ring">
+        <span class="big-pct" id="summaryPct">0%</span>
+        <span class="ring-label">First Attempt</span>
+      </div>
+
+      <div class="summary-breakdown">
+        <div class="breakdown-pill" id="summaryFirstTryCount">✅ Correct on 1st attempt: 0</div>
+        <div class="breakdown-pill" id="summaryRetryCount">🔄 Needed extra attempts: 0</div>
+      </div>
+
+      <div class="action-row">
+        <button type="button" class="btn btn-primary" id="btnSummaryPracticeMissed" style="display: none;">
+          🎯 Practice Missed Cards
+        </button>
+        <button type="button" class="btn btn-secondary" id="btnSummaryRestart">
+          ↺ Restart Full Deck
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /**
+     * ==========================================================================
+     * SPANISH 1 — UNIT 0 COMPLETE DATASET (126 CARDS)
+     * Covers every term from both Unit 0 guides across 3 activity modes:
+     *   - mode: "translate" -> Direct English-to-Spanish vocabulary & expressions
+     *   - mode: "pattern"   -> Sequencing, time logic, weather/seasons & number patterns
+     *   - mode: "dialogue"  -> Conversational prompts where students choose a logical reply
+     * ==========================================================================
+     */
+    const ALL_CARDS = [
+      // ========================================================================
+      // MODE A: DIRECT TRANSLATION (English -> Spanish)
+      // ========================================================================
+      // --- Greetings & Goodbyes ---
+      { id: 1, mode: "translate", topic: "greetings", prompt: "Hello", answer: "Hola", distractors: ["Adiós", "Buenos días", "Gracias"] },
+      { id: 2, mode: "translate", topic: "greetings", prompt: "Good morning", answer: "Buenos días", distractors: ["Buenas tardes", "Buenas noches", "Hasta mañana"] },
+      { id: 3, mode: "translate", topic: "greetings", prompt: "Good afternoon", answer: "Buenas tardes", distractors: ["Buenos días", "Buenas noches", "Hasta luego"] },
+      { id: 4, mode: "translate", topic: "greetings", prompt: "Good evening / Good night", answer: "Buenas noches", distractors: ["Buenos días", "Buenas tardes", "Nos vemos"] },
+      { id: 5, mode: "translate", topic: "greetings", prompt: "Goodbye", answer: "Adiós", distractors: ["Hola", "Mucho gusto", "Igualmente"] },
+      { id: 6, mode: "translate", topic: "greetings", prompt: "See you later!", answer: "Hasta luego", distractors: ["Hasta mañana", "Buenos días", "Estoy bien"] },
+      { id: 7, mode: "translate", topic: "greetings", prompt: "See you tomorrow!", answer: "Hasta mañana", distractors: ["Hasta luego", "Buenas noches", "Ayer"] },
+      { id: 8, mode: "translate", topic: "greetings", prompt: "See you!", answer: "Nos vemos", distractors: ["Me llamo", "Yo también", "Soy de"] },
+
+      // --- Intros, Origin & Classroom Survival ---
+      { id: 9, mode: "translate", topic: "intros", prompt: "What is your name?", answer: "¿Cómo te llamas?", distractors: ["¿Cómo estás?", "¿De dónde eres?", "¿Te gusta?"] },
+      { id: 10, mode: "translate", topic: "intros", prompt: "My name is... (literally: I call myself...)", answer: "Me llamo", distractors: ["Soy de", "Estoy bien", "Me gusta"] },
+      { id: 11, mode: "translate", topic: "intros", prompt: "My name is...", answer: "Mi nombre es", distractors: ["Yo soy", "Es de", "Nos vemos"] },
+      { id: 12, mode: "translate", topic: "intros", prompt: "I am...", answer: "Yo soy", distractors: ["Yo también", "Me llamo", "Estoy mal"] },
+      { id: 13, mode: "translate", topic: "intros", prompt: "Nice to meet you!", answer: "Mucho gusto", distractors: ["Igualmente", "Hasta luego", "Buenos días"] },
+      { id: 14, mode: "translate", topic: "intros", prompt: "Delighted to meet you!", answer: "Encantado", distractors: ["Enojado", "Cansado", "Igualmente"] },
+      { id: 15, mode: "translate", topic: "intros", prompt: "Same here! / Likewise!", answer: "Igualmente", distractors: ["Yo también", "Mucho gusto", "Adiós"] },
+      { id: 16, mode: "translate", topic: "intros", prompt: "Where are you from?", answer: "¿De dónde eres?", distractors: ["¿Cómo te llamas?", "¿Cómo estás?", "¿Puedo ir al baño?"] },
+      { id: 17, mode: "translate", topic: "intros", prompt: "I am from...", answer: "Soy de", distractors: ["Es de", "Me llamo", "Estoy bien"] },
+      { id: 18, mode: "translate", topic: "intros", prompt: "He / She is from...", answer: "Es de", distractors: ["Soy de", "Yo soy", "Mi nombre es"] },
+      { id: 19, mode: "translate", topic: "intros", prompt: "Me, too!", answer: "Yo también", distractors: ["Igualmente", "Yo soy", "No me gusta"] },
+      { id: 20, mode: "translate", topic: "intros", prompt: "Can I use the bathroom?", answer: "¿Puedo ir al baño?", distractors: ["¿Puedo ir a beber agua?", "¿Puedo ir a mi casillero?", "¿De dónde eres?"] },
+      { id: 21, mode: "translate", topic: "intros", prompt: "Can I get a drink of water?", answer: "¿Puedo ir a beber agua?", distractors: ["¿Puedo ir al baño?", "¿Puedo ir a mi casillero?", "¿Cómo estás?"] },
+      { id: 22, mode: "translate", topic: "intros", prompt: "Can I go to my locker?", answer: "¿Puedo ir a mi casillero?", distractors: ["¿Puedo ir al baño?", "¿Puedo ir a beber agua?", "¿Cómo te llamas?"] },
+
+      // --- Feelings ---
+      { id: 23, mode: "translate", topic: "feelings", prompt: "How are you?", answer: "¿Cómo estás?", distractors: ["¿Cómo te llamas?", "¿De dónde eres?", "¿Te gusta?"] },
+      { id: 24, mode: "translate", topic: "feelings", prompt: "I am good / well.", answer: "Estoy bien", distractors: ["Estoy mal", "Soy de", "Me llamo"] },
+      { id: 25, mode: "translate", topic: "feelings", prompt: "I am bad / not well.", answer: "Estoy mal", distractors: ["Estoy bien", "Estoy feliz", "Hace frío"] },
+      { id: 26, mode: "translate", topic: "feelings", prompt: "angry 😠", answer: "enojado", distractors: ["cansado", "feliz", "triste"] },
+      { id: 27, mode: "translate", topic: "feelings", prompt: "tired 😫", answer: "cansado", distractors: ["enojado", "feliz", "triste"] },
+      { id: 28, mode: "translate", topic: "feelings", prompt: "happy 😀", answer: "feliz", distractors: ["triste", "enojado", "cansado"] },
+      { id: 29, mode: "translate", topic: "feelings", prompt: "sad 😢", answer: "triste", distractors: ["feliz", "cansado", "enojado"] },
+
+      // --- Days, Months & Time ---
+      { id: 30, mode: "translate", topic: "calendar", prompt: "Monday", answer: "lunes", distractors: ["martes", "jueves", "viernes"] },
+      { id: 31, mode: "translate", topic: "calendar", prompt: "Tuesday", answer: "martes", distractors: ["miércoles", "lunes", "marzo"] },
+      { id: 32, mode: "translate", topic: "calendar", prompt: "Wednesday", answer: "miércoles", distractors: ["martes", "jueves", "viernes"] },
+      { id: 33, mode: "translate", topic: "calendar", prompt: "Thursday", answer: "jueves", distractors: ["viernes", "martes", "julio"] },
+      { id: 34, mode: "translate", topic: "calendar", prompt: "Friday", answer: "viernes", distractors: ["jueves", "sábado", "domingo"] },
+      { id: 35, mode: "translate", topic: "calendar", prompt: "Saturday", answer: "sábado", distractors: ["domingo", "viernes", "septiembre"] },
+      { id: 36, mode: "translate", topic: "calendar", prompt: "Sunday", answer: "domingo", distractors: ["sábado", "lunes", "diciembre"] },
+      { id: 37, mode: "translate", topic: "calendar", prompt: "January", answer: "enero", distractors: ["febrero", "junio", "julio"] },
+      { id: 38, mode: "translate", topic: "calendar", prompt: "February", answer: "febrero", distractors: ["enero", "marzo", "abril"] },
+      { id: 39, mode: "translate", topic: "calendar", prompt: "March", answer: "marzo", distractors: ["martes", "mayo", "abril"] },
+      { id: 40, mode: "translate", topic: "calendar", prompt: "April", answer: "abril", distractors: ["agosto", "marzo", "mayo"] },
+      { id: 41, mode: "translate", topic: "calendar", prompt: "May", answer: "mayo", distractors: ["marzo", "junio", "julio"] },
+      { id: 42, mode: "translate", topic: "calendar", prompt: "June", answer: "junio", distractors: ["julio", "jueves", "enero"] },
+      { id: 43, mode: "translate", topic: "calendar", prompt: "July", answer: "julio", distractors: ["junio", "jueves", "agosto"] },
+      { id: 44, mode: "translate", topic: "calendar", prompt: "August", answer: "agosto", distractors: ["abril", "octubre", "julio"] },
+      { id: 45, mode: "translate", topic: "calendar", prompt: "September", answer: "septiembre", distractors: ["noviembre", "diciembre", "sábado"] },
+      { id: 46, mode: "translate", topic: "calendar", prompt: "October", answer: "octubre", distractors: ["noviembre", "agosto", "enero"] },
+      { id: 47, mode: "translate", topic: "calendar", prompt: "November", answer: "noviembre", distractors: ["octubre", "diciembre", "septiembre"] },
+      { id: 48, mode: "translate", topic: "calendar", prompt: "December", answer: "diciembre", distractors: ["noviembre", "domingo", "septiembre"] },
+      { id: 49, mode: "translate", topic: "calendar", prompt: "Yesterday", answer: "ayer", distractors: ["hoy", "mañana", "después"] },
+      { id: 50, mode: "translate", topic: "calendar", prompt: "Today", answer: "hoy", distractors: ["ayer", "mañana", "antes"] },
+      { id: 51, mode: "translate", topic: "calendar", prompt: "Tomorrow", answer: "mañana", distractors: ["ayer", "hoy", "tarde"] },
+      { id: 52, mode: "translate", topic: "calendar", prompt: "Before", answer: "antes", distractors: ["después", "ayer", "hoy"] },
+      { id: 53, mode: "translate", topic: "calendar", prompt: "After", answer: "después", distractors: ["antes", "mañana", "hoy"] },
+
+      // --- Seasons, Weather & Likes ---
+      { id: 54, mode: "translate", topic: "weather", prompt: "Fall / Autumn 🍂", answer: "otoño", distractors: ["invierno", "primavera", "verano"] },
+      { id: 55, mode: "translate", topic: "weather", prompt: "Winter ❄️", answer: "invierno", distractors: ["verano", "otoño", "primavera"] },
+      { id: 56, mode: "translate", topic: "weather", prompt: "Spring 🌸", answer: "primavera", distractors: ["verano", "otoño", "invierno"] },
+      { id: 57, mode: "translate", topic: "weather", prompt: "Summer ☀️", answer: "verano", distractors: ["invierno", "primavera", "otoño"] },
+      { id: 58, mode: "translate", topic: "weather", prompt: "It's cold.", answer: "hace frío", distractors: ["hace calor", "hace fresco", "hace sol"] },
+      { id: 59, mode: "translate", topic: "weather", prompt: "It's chilly / cool.", answer: "hace fresco", distractors: ["hace frío", "hace calor", "hace viento"] },
+      { id: 60, mode: "translate", topic: "weather", prompt: "It's hot.", answer: "hace calor", distractors: ["hace frío", "hace fresco", "nieva"] },
+      { id: 61, mode: "translate", topic: "weather", prompt: "It's raining. 🌧️", answer: "llueve", distractors: ["nieva", "hace sol", "hace viento"] },
+      { id: 62, mode: "translate", topic: "weather", prompt: "It's snowing. 🌨️", answer: "nieva", distractors: ["llueve", "hace calor", "hace sol"] },
+      { id: 63, mode: "translate", topic: "weather", prompt: "It's sunny. ☀️", answer: "hace sol", distractors: ["hace viento", "llueve", "nieva"] },
+      { id: 64, mode: "translate", topic: "weather", prompt: "It's windy. 💨", answer: "hace viento", distractors: ["hace sol", "hace frío", "llueve"] },
+      { id: 65, mode: "translate", topic: "weather", prompt: "Do you like?", answer: "¿Te gusta?", distractors: ["Me gusta", "No me gusta", "¿Cómo estás?"] },
+      { id: 66, mode: "translate", topic: "weather", prompt: "I like...", answer: "Me gusta", distractors: ["No me gusta", "¿Te gusta?", "Me llamo"] },
+      { id: 67, mode: "translate", topic: "weather", prompt: "I do not like...", answer: "No me gusta", distractors: ["Me gusta", "¿Te gusta?", "Yo también"] },
+
+      // --- Numbers (0-100) ---
+      { id: 68, mode: "translate", topic: "numbers", prompt: "11", answer: "once", distractors: ["doce", "quince", "diez"] },
+      { id: 69, mode: "translate", topic: "numbers", prompt: "12", answer: "doce", distractors: ["once", "trece", "veinte"] },
+      { id: 70, mode: "translate", topic: "numbers", prompt: "13", answer: "trece", distractors: ["catorce", "treinta", "tres"] },
+      { id: 71, mode: "translate", topic: "numbers", prompt: "14", answer: "catorce", distractors: ["quince", "cuarenta", "cuatro"] },
+      { id: 72, mode: "translate", topic: "numbers", prompt: "15", answer: "quince", distractors: ["catorce", "cincuenta", "cinco"] },
+      { id: 73, mode: "translate", topic: "numbers", prompt: "16", answer: "dieciséis", distractors: ["diecisiete", "sesenta", "seis"] },
+      { id: 74, mode: "translate", topic: "numbers", prompt: "17", answer: "diecisiete", distractors: ["dieciséis", "setenta", "siete"] },
+      { id: 75, mode: "translate", topic: "numbers", prompt: "18", answer: "dieciocho", distractors: ["diecinueve", "ochenta", "ocho"] },
+      { id: 76, mode: "translate", topic: "numbers", prompt: "19", answer: "diecinueve", distractors: ["dieciocho", "noventa", "nueve"] },
+      { id: 77, mode: "translate", topic: "numbers", prompt: "20", answer: "veinte", distractors: ["doce", "treinta", "veinticuatro"] },
+      { id: 78, mode: "translate", topic: "numbers", prompt: "24", answer: "veinticuatro", distractors: ["cuarenta y dos", "catorce", "veinte"] },
+      { id: 79, mode: "translate", topic: "numbers", prompt: "38", answer: "treinta y ocho", distractors: ["ochenta y tres", "dieciocho", "treinta"] },
+      { id: 80, mode: "translate", topic: "numbers", prompt: "43", answer: "cuarenta y tres", distractors: ["treinta y cuatro", "cincuenta y seis", "trece"] },
+      { id: 81, mode: "translate", topic: "numbers", prompt: "56", answer: "cincuenta y seis", distractors: ["sesenta y cinco", "dieciséis", "cincuenta y dos"] },
+      { id: 82, mode: "translate", topic: "numbers", prompt: "67", answer: "sesenta y siete", distractors: ["setenta y seis", "diecisiete", "sesenta y uno"] },
+      { id: 83, mode: "translate", topic: "numbers", prompt: "78", answer: "setenta y ocho", distractors: ["ochenta y siete", "sesenta y ocho", "dieciocho"] },
+      { id: 84, mode: "translate", topic: "numbers", prompt: "82", answer: "ochenta y dos", distractors: ["veintiocho", "setenta y dos", "doce"] },
+      { id: 85, mode: "translate", topic: "numbers", prompt: "99", answer: "noventa y nueve", distractors: ["diecinueve", "ochenta y nueve", "noventa"] },
+
+      // ========================================================================
+      // MODE B: SEQUENCES & PATTERN RECOGNITION (Logic & Order)
+      // ========================================================================
+      {
+        id: 86,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "lunes, martes, _______, jueves",
+        hint: "What day of the week comes after Tuesday (martes)?",
+        answer: "miércoles",
+        distractors: ["viernes", "sábado", "domingo"]
+      },
+      {
+        id: 87,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "jueves, viernes, _______, domingo",
+        hint: "What day comes between Friday (viernes) and Sunday (domingo)?",
+        answer: "sábado",
+        distractors: ["lunes", "martes", "miércoles"]
+      },
+      {
+        id: 88,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "Si hoy es miércoles, mañana es _______.",
+        hint: "If today is Wednesday, tomorrow is...",
+        answer: "jueves",
+        distractors: ["martes", "viernes", "lunes"]
+      },
+      {
+        id: 89,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "Si hoy es lunes, ayer fue _______.",
+        hint: "If today is Monday, yesterday was...",
+        answer: "domingo",
+        distractors: ["martes", "sábado", "viernes"]
+      },
+      {
+        id: 90,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "enero, febrero, _______, abril",
+        hint: "What month comes after February (febrero)?",
+        answer: "marzo",
+        distractors: ["mayo", "martes", "junio"]
+      },
+      {
+        id: 91,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "mayo, junio, _______, agosto",
+        hint: "What month comes between June (junio) and August (agosto)?",
+        answer: "julio",
+        distractors: ["jueves", "enero", "abril"]
+      },
+      {
+        id: 92,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "septiembre, octubre, _______, diciembre",
+        hint: "What month comes after October (octubre)?",
+        answer: "noviembre",
+        distractors: ["enero", "agosto", "febrero"]
+      },
+      {
+        id: 93,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "El mes antes de enero es _______.",
+        hint: "The month before January (enero) is...",
+        answer: "diciembre",
+        distractors: ["febrero", "noviembre", "octubre"]
+      },
+      {
+        id: 94,
+        mode: "pattern",
+        topic: "calendar",
+        prompt: "El día después de viernes es _______.",
+        hint: "The day after Friday (viernes) is...",
+        answer: "sábado",
+        distractors: ["jueves", "domingo", "lunes"]
+      },
+      {
+        id: 95,
+        mode: "pattern",
+        topic: "weather",
+        prompt: "primavera, _______, otoño, invierno",
+        hint: "Which season comes after Spring (primavera)?",
+        answer: "verano",
+        distractors: ["enero", "hace sol", "julio"]
+      },
+      {
+        id: 96,
+        mode: "pattern",
+        topic: "weather",
+        prompt: "En enero, normalmente _______.",
+        hint: "In January (winter), what is the weather usually like?",
+        answer: "hace frío",
+        distractors: ["hace calor", "verano", "hace sol"]
+      },
+      {
+        id: 97,
+        mode: "pattern",
+        topic: "weather",
+        prompt: "En julio, normalmente _______.",
+        hint: "In July (summer), what is the weather usually like?",
+        answer: "hace calor",
+        distractors: ["hace frío", "nieva", "invierno"]
+      },
+      {
+        id: 98,
+        mode: "pattern",
+        topic: "weather",
+        prompt: "Diciembre, enero y febrero son meses de _______.",
+        hint: "December, January, and February are months of which season?",
+        answer: "invierno",
+        distractors: ["verano", "primavera", "otoño"]
+      },
+      {
+        id: 99,
+        mode: "pattern",
+        topic: "weather",
+        prompt: "Junio, julio y agosto son meses de _______.",
+        hint: "June, July, and August are months of which season?",
+        answer: "verano",
+        distractors: ["invierno", "otoño", "primavera"]
+      },
+      {
+        id: 100,
+        mode: "pattern",
+        topic: "greetings",
+        prompt: "8:00 AM → Buenos días | 3:00 PM → _______",
+        hint: "Which greeting matches 3:00 PM in the afternoon?",
+        answer: "Buenas tardes",
+        distractors: ["Buenos días", "Buenas noches", "Hasta mañana"]
+      },
+      {
+        id: 101,
+        mode: "pattern",
+        topic: "greetings",
+        prompt: "3:00 PM → Buenas tardes | 9:00 PM → _______",
+        hint: "Which greeting matches 9:00 PM at night?",
+        answer: "Buenas noches",
+        distractors: ["Buenos días", "Buenas tardes", "Hola"]
+      },
+      {
+        id: 102,
+        mode: "pattern",
+        topic: "numbers",
+        prompt: "once, doce, trece, _______, quince",
+        hint: "11, 12, 13, ___, 15",
+        answer: "catorce",
+        distractors: ["cuarenta", "dieciséis", "cuatro"]
+      },
+      {
+        id: 103,
+        mode: "pattern",
+        topic: "numbers",
+        prompt: "dieciséis, diecisiete, _______, diecinueve",
+        hint: "16, 17, ___, 19",
+        answer: "dieciocho",
+        distractors: ["ochenta", "ocho", "veinte"]
+      },
+      {
+        id: 104,
+        mode: "pattern",
+        topic: "numbers",
+        prompt: "diez, quince, _______, veinticinco",
+        hint: "Counting by 5s: 10, 15, ___, 25",
+        answer: "veinte",
+        distractors: ["doce", "treinta", "catorce"]
+      },
+      {
+        id: 105,
+        mode: "pattern",
+        topic: "numbers",
+        prompt: "veinte + cuatro = _______",
+        hint: "20 + 4 = ?",
+        answer: "veinticuatro",
+        distractors: ["catorce", "cuarenta y dos", "treinta y cuatro"]
+      },
+      {
+        id: 106,
+        mode: "pattern",
+        topic: "numbers",
+        prompt: "cincuenta, sesenta, _______, ochenta, noventa",
+        hint: "Counting by 10s: 50, 60, ___, 80, 90",
+        answer: "setenta",
+        distractors: ["sesenta y siete", "diecisiete", "catorce"]
+      },
+      {
+        id: 107,
+        mode: "pattern",
+        topic: "feelings",
+        prompt: "😀 feliz  ↔  😢 _______",
+        hint: "What is the opposite of happy (feliz)?",
+        answer: "triste",
+        distractors: ["cansado", "enojado", "estoy bien"]
+      },
+
+      // ========================================================================
+      // MODE C: MINI-DIALOGUES (Pick or Type a Logical Reply)
+      // ========================================================================
+      {
+        id: 108,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "«¿Cómo te llamas?»",
+        hint: "The speaker asks: 'What is your name?' Pick a logical reply.",
+        answer: "Me llamo Alex.",
+        distractors: ["Estoy bien.", "Soy de Minnesota.", "Mucho gusto."]
+      },
+      {
+        id: 109,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "«¡Mucho gusto!»",
+        hint: "The speaker says: 'Nice to meet you!' How do you reply politely?",
+        answer: "Igualmente.",
+        distractors: ["Hasta mañana.", "¿Cómo te llamas?", "Estoy mal."]
+      },
+      {
+        id: 110,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "«¿De dónde eres?»",
+        hint: "The speaker asks: 'Where are you from?' Pick a logical reply.",
+        answer: "Soy de Minnesota.",
+        distractors: ["Me llamo Sofía.", "Estoy feliz.", "Nos vemos."]
+      },
+      {
+        id: 111,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "«Yo soy de Chicago. ¿Y tú?»",
+        hint: "They say: 'I am from Chicago. And you?' If you are also from Chicago, say...",
+        answer: "Yo también.",
+        distractors: ["Igualmente.", "No me gusta.", "Hasta luego."]
+      },
+      {
+        id: 112,
+        mode: "dialogue",
+        topic: "feelings",
+        prompt: "«Hola, ¿cómo estás?»",
+        hint: "The speaker asks: 'Hi, how are you?' Pick a logical reply.",
+        answer: "Estoy bien.",
+        distractors: ["Me llamo Carlos.", "Soy de Texas.", "Buenos días."]
+      },
+      {
+        id: 113,
+        mode: "dialogue",
+        topic: "feelings",
+        prompt: "«¿Estás feliz hoy?»",
+        hint: "The speaker asks: 'Are you happy today?' Pick a logical response.",
+        answer: "Sí, estoy feliz.",
+        distractors: ["Me llamo Elena.", "Hace frío.", "Es martes."]
+      },
+      {
+        id: 114,
+        mode: "dialogue",
+        topic: "greetings",
+        prompt: "«¡Buenos días!»",
+        hint: "Someone greets you in the morning: 'Good morning!' How do you respond?",
+        answer: "Buenos días.",
+        distractors: ["Buenas noches.", "Adiós.", "Soy de España."]
+      },
+      {
+        id: 115,
+        mode: "dialogue",
+        topic: "greetings",
+        prompt: "«¡Adiós! ¡Hasta mañana!»",
+        hint: "Your friend says: 'Goodbye! See you tomorrow!' Pick a logical reply.",
+        answer: "Nos vemos.",
+        distractors: ["Mucho gusto.", "¿Cómo estás?", "Buenos días."]
+      },
+      {
+        id: 116,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "You need to leave class to use the restroom. What do you ask your teacher?",
+        hint: "Ask: 'Can I use the bathroom?'",
+        answer: "¿Puedo ir al baño?",
+        distractors: ["¿Puedo ir a mi casillero?", "¿De dónde eres?", "¿Cómo te llamas?"]
+      },
+      {
+        id: 117,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "You forgot your notebook in your locker. What do you ask your teacher?",
+        hint: "Ask: 'Can I go to my locker?'",
+        answer: "¿Puedo ir a mi casillero?",
+        distractors: ["¿Puedo ir a beber agua?", "¿Puedo ir al baño?", "¿Cómo estás?"]
+      },
+      {
+        id: 118,
+        mode: "dialogue",
+        topic: "intros",
+        prompt: "You are thirsty and want to use the water fountain. What do you ask?",
+        hint: "Ask: 'Can I get a drink of water?'",
+        answer: "¿Puedo ir a beber agua?",
+        distractors: ["¿Puedo ir al baño?", "¿Puedo ir a mi casillero?", "¿Te gusta?"]
+      },
+      {
+        id: 119,
+        mode: "dialogue",
+        topic: "weather",
+        prompt: "«¿Te gusta el verano?»",
+        hint: "The speaker asks: 'Do you like summer?' Pick a logical reply.",
+        answer: "Sí, me gusta.",
+        distractors: ["Estoy cansado.", "Me llamo Sam.", "Hoy es lunes."]
+      },
+      {
+        id: 120,
+        mode: "dialogue",
+        topic: "weather",
+        prompt: "«¿Te gusta cuando llueve?»",
+        hint: "The speaker asks: 'Do you like it when it rains?' Pick a logical negative reply.",
+        answer: "No me gusta.",
+        distractors: ["Yo también.", "Igualmente.", "Mucho gusto."]
+      },
+      {
+        id: 121,
+        mode: "dialogue",
+        topic: "calendar",
+        prompt: "«¿Qué día es hoy?» (Today is Friday)",
+        hint: "The speaker asks: 'What day is today?' Reply with Friday.",
+        answer: "Hoy es viernes.",
+        distractors: ["Hoy es enero.", "Hace sol.", "Estoy bien."]
+      },
+      {
+        id: 122,
+        mode: "dialogue",
+        topic: "calendar",
+        prompt: "«¿Qué día es mañana?» (Tomorrow is Saturday)",
+        hint: "The speaker asks: 'What day is tomorrow?' Reply with Saturday.",
+        answer: "Mañana es sábado.",
+        distractors: ["Ayer fue sábado.", "Hoy es domingo.", "Es verano."]
+      }
+    ];
+
+    const MODE_META = {
+      translate: {
+        badge: "A. Direct Translation",
+        badgeClass: "mode-translate",
+        instruction: "How do you say this in Spanish?"
+      },
+      pattern: {
+        badge: "B. Sequences & Logic",
+        badgeClass: "mode-pattern",
+        instruction: "Complete the sequence or pattern in Spanish:"
+      },
+      dialogue: {
+        badge: "C. Mini-Dialogues",
+        badgeClass: "mode-dialogue",
+        instruction: "Read the prompt and choose a logical response in Spanish:"
+      }
+    };
+
+    const TOPIC_LABELS = {
+      greetings: "Greetings & Goodbyes",
+      intros: "Intros & Classroom",
+      feelings: "Feelings",
+      calendar: "Days, Months & Time",
+      weather: "Seasons & Weather",
+      numbers: "Numbers (0–100)"
+    };
+
+    /**
+     * ==========================================================================
+     * IN-MEMORY STATE (Safe for sandboxed Schoology iframes)
+     * ==========================================================================
+     */
+    const state = {
+      activeMode: "ALL",
+      activeTopic: "ALL",
+      isTypingMode: false,
+      isShuffled: true,
+      practiceMissedOnly: false,
+      deck: [],
+      currentIndex: 0,
+      cardStats: {},
+      currentOptions: [],
+      currentStreak: 0,
+      bestStreak: 0,
+      cardSolvedOnScreen: false
+    };
+
+    const dom = {
+      modeBar: document.getElementById("modeBar"),
+      filterTabs: document.getElementById("filterTabs"),
+      btnInputMode: document.getElementById("btnInputMode"),
+      btnShuffle: document.getElementById("btnShuffle"),
+      btnPracticeMissed: document.getElementById("btnPracticeMissed"),
+      missedCountBadge: document.getElementById("missedCountBadge"),
+      btnReset: document.getElementById("btnReset"),
+
+      statFirstTryPct: document.getElementById("statFirstTryPct"),
+      statFirstTryFraction: document.getElementById("statFirstTryFraction"),
+      statCompleted: document.getElementById("statCompleted"),
+      statRemaining: document.getElementById("statRemaining"),
+      statStreak: document.getElementById("statStreak"),
+      statBestStreak: document.getElementById("statBestStreak"),
+      statActualScore: document.getElementById("statActualScore"),
+      statActualFraction: document.getElementById("statActualFraction"),
+      progressBarFill: document.getElementById("progressBarFill"),
+      progressBarTrack: document.getElementById("progressBarTrack"),
+
+      flashcardBox: document.getElementById("flashcardBox"),
+      cardModeBadge: document.getElementById("cardModeBadge"),
+      cardTopicBadge: document.getElementById("cardTopicBadge"),
+      cardCounterText: document.getElementById("cardCounterText"),
+      cardAttemptBadge: document.getElementById("cardAttemptBadge"),
+      taskInstruction: document.getElementById("taskInstruction"),
+      promptContainer: document.getElementById("promptContainer"),
+      hintRow: document.getElementById("hintRow"),
+      btnShowHint: document.getElementById("btnShowHint"),
+      hintText: document.getElementById("hintText"),
+      mcContainer: document.getElementById("mcContainer"),
+      typingContainer: document.getElementById("typingContainer"),
+      answerInput: document.getElementById("answerInput"),
+      feedbackBanner: document.getElementById("feedbackBanner"),
+      keyboardTip: document.getElementById("keyboardTip"),
+
+      btnPrev: document.getElementById("btnPrev"),
+      btnCheck: document.getElementById("btnCheck"),
+      btnReveal: document.getElementById("btnReveal"),
+      btnNext: document.getElementById("btnNext"),
+
+      summaryScreen: document.getElementById("summaryScreen"),
+      summarySubtitle: document.getElementById("summarySubtitle"),
+      summaryPct: document.getElementById("summaryPct"),
+      summaryFirstTryCount: document.getElementById("summaryFirstTryCount"),
+      summaryRetryCount: document.getElementById("summaryRetryCount"),
+      btnSummaryPracticeMissed: document.getElementById("btnSummaryPracticeMissed"),
+      btnSummaryRestart: document.getElementById("btnSummaryRestart")
+    };
+
+    /**
+     * ==========================================================================
+     * HELPERS & NORMALIZATION
+     * ==========================================================================
+     */
+    function getCardStat(id) {
+      if (!state.cardStats[id]) {
+        state.cardStats[id] = {
+          attempts: 0,
+          firstTryCorrect: null,
+          completed: false,
+          revealed: false,
+          wrongChoices: [],
+          lastInput: ""
+        };
+      }
+      return state.cardStats[id];
+    }
+
+    function normalizeForTyping(str) {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[¿¡?!.,]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function stripAccents(str) {
+      return str.normalize("NFD").replace(/[̀-ͯ]/g, "");
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function updateTopicCounts() {
+      const buttons = document.querySelectorAll("#filterTabs .tab-btn");
+      buttons.forEach((btn) => {
+        const topic = btn.dataset.topic;
+        const baseLabel = btn.textContent.replace(/\s*\(\d+\)$/, "");
+        const count = ALL_CARDS.filter((c) => {
+          const modeOk = state.activeMode === "ALL" || c.mode === state.activeMode;
+          const topicOk = topic === "ALL" || c.topic === topic;
+          return modeOk && topicOk;
+        }).length;
+        btn.textContent = `${baseLabel} (${count})`;
+      });
+    }
+
+    /**
+     * ==========================================================================
+     * DECK FILTERING & BUILDING
+     * ==========================================================================
+     */
+    function buildDeck() {
+      let filtered = ALL_CARDS;
+
+      if (state.practiceMissedOnly) {
+        filtered = ALL_CARDS.filter((c) => state.cardStats[c.id]?.firstTryCorrect === false);
+        if (filtered.length === 0) {
+          state.practiceMissedOnly = false;
+          filtered = ALL_CARDS;
+        }
+      } else {
+        filtered = ALL_CARDS.filter((c) => {
+          const modeOk = state.activeMode === "ALL" || c.mode === state.activeMode;
+          const topicOk = state.activeTopic === "ALL" || c.topic === state.activeTopic;
+          return modeOk && topicOk;
+        });
+      }
+
+      state.deck = state.isShuffled ? shuffleArray(filtered) : [...filtered];
+      state.currentIndex = 0;
+      state.cardSolvedOnScreen = false;
+      updateTopicCounts();
+      hideSummary();
+      renderCurrentCard();
+      updateDashboard();
+    }
+
+    /**
+     * ==========================================================================
+     * RENDER CURRENT CARD (MULTIPLE CHOICE OR TYPING MODE)
+     * ==========================================================================
+     */
+    function renderCurrentCard() {
+      if (state.deck.length === 0) return;
+
+      const card = state.deck[state.currentIndex];
+      const st = getCardStat(card.id);
+      const meta = MODE_META[card.mode];
+      state.cardSolvedOnScreen = st.completed;
+
+      // Reset visual states
+      dom.flashcardBox.classList.remove("state-correct", "state-incorrect");
+      dom.feedbackBanner.className = "feedback-banner";
+      dom.feedbackBanner.textContent = "";
+
+      // Meta badges
+      dom.cardModeBadge.className = `badge-mode ${meta.badgeClass}`;
+      dom.cardModeBadge.textContent = meta.badge;
+      dom.cardTopicBadge.textContent = TOPIC_LABELS[card.topic] || card.topic;
+      dom.cardCounterText.textContent = `Card ${state.currentIndex + 1} of ${state.deck.length}`;
+      updateCardBadge(st);
+
+      // Task instruction & prompt
+      dom.taskInstruction.textContent = meta.instruction;
+      dom.promptContainer.innerHTML = "";
+
+      if (card.mode === "dialogue" && card.prompt.startsWith("«")) {
+        const bubble = document.createElement("span");
+        bubble.className = "dialogue-bubble";
+        bubble.textContent = card.prompt;
+        dom.promptContainer.appendChild(bubble);
+      } else {
+        dom.promptContainer.textContent = card.prompt;
+      }
+
+      // Optional English Hint (for Pattern & Dialogue modes)
+      if (card.hint) {
+        dom.hintRow.style.display = "block";
+        dom.btnShowHint.style.display = "inline-block";
+        dom.hintText.style.display = "none";
+        dom.hintText.textContent = card.hint;
+      } else {
+        dom.hintRow.style.display = "none";
+      }
+
+      // Render Multiple Choice vs Typing UI
+      if (state.isTypingMode) {
+        dom.mcContainer.style.display = "none";
+        dom.typingContainer.classList.add("visible");
+        dom.btnCheck.style.display = "inline-flex";
+        dom.keyboardTip.innerHTML =
+          'Press <kbd>Enter</kbd> to check your answer and <kbd>Enter</kbd> again for the next card.';
+
+        dom.answerInput.classList.remove("input-correct", "input-incorrect");
+        if (st.completed) {
+          dom.answerInput.value = card.answer;
+          dom.answerInput.classList.add("input-correct");
+        } else {
+          dom.answerInput.value = st.lastInput || "";
+        }
+        setTimeout(() => dom.answerInput.focus(), 10);
+      } else {
+        dom.mcContainer.style.display = "grid";
+        dom.typingContainer.classList.remove("visible");
+        dom.btnCheck.style.display = "none";
+        dom.keyboardTip.innerHTML =
+          'Click an option (or press <kbd>1</kbd>–<kbd>4</kbd>), then press <kbd>Enter</kbd> for the next card.';
+
+        // Build 4 shuffled options (keep order consistent while revisiting same card)
+        const options = shuffleArray([card.answer, ...card.distractors]);
+        state.currentOptions = options;
+        dom.mcContainer.innerHTML = "";
+
+        options.forEach((optText, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "mc-option";
+          btn.dataset.value = optText;
+
+          const keySpan = document.createElement("span");
+          keySpan.className = "mc-key";
+          keySpan.textContent = idx + 1;
+
+          const textSpan = document.createElement("span");
+          textSpan.textContent = optText;
+
+          btn.appendChild(keySpan);
+          btn.appendChild(textSpan);
+
+          if (st.completed) {
+            btn.disabled = true;
+            if (optText === card.answer) {
+              btn.classList.add("opt-correct");
+            }
+          } else if (st.wrongChoices.includes(optText)) {
+            btn.disabled = true;
+            btn.classList.add("opt-wrong");
+          }
+
+          btn.addEventListener("click", () => handleMultipleChoiceSelect(btn, optText));
+          dom.mcContainer.appendChild(btn);
+        });
+      }
+
+      if (st.completed) {
+        dom.flashcardBox.classList.add("state-correct");
+        showFeedback(
+          "success",
+          st.revealed
+            ? `Answer shown: "${card.answer}". Click Next to continue.`
+            : `¡Excelente! "${card.answer}"`
+        );
+      }
+
+      dom.btnPrev.disabled = state.currentIndex === 0;
+      dom.btnNext.textContent =
+        state.currentIndex === state.deck.length - 1 ? "Finish ✓" : "Next →";
+    }
+
+    /**
+     * ==========================================================================
+     * GRADING LOGIC (MULTIPLE CHOICE & TYPING)
+     * ==========================================================================
+     */
+    function handleMultipleChoiceSelect(btnEl, selectedValue) {
+      const card = state.deck[state.currentIndex];
+      const st = getCardStat(card.id);
+      if (st.completed) return;
+
+      if (selectedValue === card.answer) {
+        if (st.firstTryCorrect === null) {
+          st.firstTryCorrect = true;
+          state.currentStreak += 1;
+          if (state.currentStreak > state.bestStreak) {
+            state.bestStreak = state.currentStreak;
+          }
+        }
+        st.attempts += 1;
+        st.completed = true;
+        state.cardSolvedOnScreen = true;
+
+        btnEl.classList.add("opt-correct");
+        document.querySelectorAll(".mc-option").forEach((b) => (b.disabled = true));
+        dom.flashcardBox.classList.remove("state-incorrect");
+        dom.flashcardBox.classList.add("state-correct");
+
+        showFeedback(
+          "success",
+          st.firstTryCorrect
+            ? `¡Muy bien! Correct on your first try: "${card.answer}"`
+            : `¡Correcto! "${card.answer}"`
+        );
+        updateCardBadge(st);
+        updateDashboard();
+      } else {
+        if (st.firstTryCorrect === null) {
+          st.firstTryCorrect = false;
+          state.currentStreak = 0;
+        }
+        st.attempts += 1;
+        if (!st.wrongChoices.includes(selectedValue)) {
+          st.wrongChoices.push(selectedValue);
+        }
+
+        btnEl.classList.add("opt-wrong");
+        btnEl.disabled = true;
+        dom.flashcardBox.classList.add("state-incorrect");
+        showFeedback("error", "Not quite — try another option!");
+        updateCardBadge(st);
+        updateDashboard();
+      }
+    }
+
+    function checkTypedAnswer() {
+      const card = state.deck[state.currentIndex];
+      const st = getCardStat(card.id);
+      const rawUser = dom.answerInput.value;
+      const userClean = normalizeForTyping(rawUser);
+      const targetClean = normalizeForTyping(card.answer);
+
+      if (!userClean) {
+        showFeedback("warning", "Please type your Spanish answer before checking.");
+        dom.answerInput.focus();
+        return;
+      }
+
+      st.lastInput = rawUser;
+
+      // Exact match (ignoring leading/trailing ¿ ¡ . ! and capitalization)
+      if (userClean === targetClean) {
+        if (st.firstTryCorrect === null) {
+          st.firstTryCorrect = true;
+          state.currentStreak += 1;
+          if (state.currentStreak > state.bestStreak) {
+            state.bestStreak = state.currentStreak;
+          }
+        }
+        st.attempts += 1;
+        st.completed = true;
+        state.cardSolvedOnScreen = true;
+
+        dom.answerInput.value = card.answer;
+        dom.answerInput.classList.remove("input-incorrect");
+        dom.answerInput.classList.add("input-correct");
+        dom.flashcardBox.classList.remove("state-incorrect");
+        dom.flashcardBox.classList.add("state-correct");
+
+        showFeedback(
+          "success",
+          st.firstTryCorrect
+            ? `¡Muy bien! Correct on your first attempt: "${card.answer}"`
+            : `¡Correcto! "${card.answer}"`
+        );
+        updateCardBadge(st);
+        updateDashboard();
+        return;
+      }
+
+      // Incorrect typed attempt
+      if (st.firstTryCorrect === null) {
+        st.firstTryCorrect = false;
+        state.currentStreak = 0;
+      }
+      st.attempts += 1;
+      state.cardSolvedOnScreen = false;
+
+      dom.answerInput.classList.remove("input-correct");
+      dom.answerInput.classList.add("input-incorrect");
+      dom.flashcardBox.classList.remove("state-correct");
+      dom.flashcardBox.classList.add("state-incorrect");
+      updateCardBadge(st);
+      updateDashboard();
+
+      // Accent mark hint
+      if (stripAccents(userClean) === stripAccents(targetClean)) {
+        showFeedback(
+          "warning",
+          "So close! Check your accent marks (á, é, í, ó, ú) or ñ and try again."
+        );
+        dom.answerInput.focus();
+        return;
+      }
+
+      showFeedback("error", "Not quite — check spelling and try again, or click Show Answer.");
+      dom.answerInput.focus();
+    }
+
+    function revealAnswer() {
+      const card = state.deck[state.currentIndex];
+      const st = getCardStat(card.id);
+
+      if (st.firstTryCorrect === null) {
+        st.firstTryCorrect = false;
+        state.currentStreak = 0;
+      }
+      st.attempts += 1;
+      st.completed = true;
+      st.revealed = true;
+      state.cardSolvedOnScreen = true;
+
+      if (state.isTypingMode) {
+        dom.answerInput.value = card.answer;
+        dom.answerInput.classList.remove("input-incorrect");
+        dom.answerInput.classList.add("input-correct");
+      } else {
+        document.querySelectorAll(".mc-option").forEach((b) => {
+          b.disabled = true;
+          if (b.dataset.value === card.answer) {
+            b.classList.add("opt-correct");
+          }
+        });
+      }
+
+      dom.flashcardBox.classList.remove("state-incorrect");
+      dom.flashcardBox.classList.add("state-correct");
+      showFeedback(
+        "warning",
+        `Answer: "${card.answer}" — Click Next to continue.`
+      );
+      updateCardBadge(st);
+      updateDashboard();
+    }
+
+    function updateCardBadge(st) {
+      if (st.firstTryCorrect === true) {
+        dom.cardAttemptBadge.className = "badge-attempt mastered-first";
+        dom.cardAttemptBadge.textContent = "✓ First Attempt";
+      } else if (st.attempts > 0) {
+        dom.cardAttemptBadge.className = "badge-attempt retry";
+        dom.cardAttemptBadge.textContent = `Attempts: ${st.attempts}`;
+      } else {
+        dom.cardAttemptBadge.className = "badge-attempt first-try";
+        dom.cardAttemptBadge.textContent = "First Attempt";
+      }
+    }
+
+    function showFeedback(type, text) {
+      dom.feedbackBanner.className = `feedback-banner visible ${type}`;
+      dom.feedbackBanner.textContent = text;
+    }
+
+    /**
+     * ==========================================================================
+     * NAVIGATION, SUMMARY & DASHBOARD
+     * ==========================================================================
+     */
+    function goPrev() {
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+        renderCurrentCard();
+      }
+    }
+
+    function goNext() {
+      if (state.currentIndex < state.deck.length - 1) {
+        state.currentIndex += 1;
+        renderCurrentCard();
+      } else {
+        showSummary();
+      }
+    }
+
+    function showSummary() {
+      dom.flashcardBox.style.display = "none";
+      dom.summaryScreen.classList.add("visible");
+
+      const deckIds = state.deck.map((c) => c.id);
+      const firstTryWins = deckIds.filter(
+        (id) => state.cardStats[id]?.firstTryCorrect === true
+      ).length;
+      const missedCount = deckIds.length - firstTryWins;
+      const pct =
+        deckIds.length > 0 ? Math.round((firstTryWins / deckIds.length) * 100) : 0;
+
+      dom.summaryPct.textContent = `${pct}%`;
+      dom.summarySubtitle.textContent = `You completed all ${deckIds.length} cards in this set.`;
+      dom.summaryFirstTryCount.textContent = `✅ Correct on 1st attempt: ${firstTryWins}`;
+      dom.summaryRetryCount.textContent = `🔄 Needed extra attempts: ${missedCount}`;
+
+      if (missedCount > 0) {
+        dom.btnSummaryPracticeMissed.style.display = "inline-flex";
+        dom.btnSummaryPracticeMissed.textContent = `🎯 Practice ${missedCount} Missed Card${missedCount === 1 ? "" : "s"}`;
+      } else {
+        dom.btnSummaryPracticeMissed.style.display = "none";
+      }
+    }
+
+    function hideSummary() {
+      dom.summaryScreen.classList.remove("visible");
+      dom.flashcardBox.style.display = "block";
+    }
+
+    function updateDashboard() {
+      const allAttemptedIds = Object.keys(state.cardStats).filter(
+        (id) => state.cardStats[id].firstTryCorrect !== null
+      );
+      const firstTryWins = allAttemptedIds.filter(
+        (id) => state.cardStats[id].firstTryCorrect === true
+      ).length;
+      const totalAttempted = allAttemptedIds.length;
+
+      if (totalAttempted === 0) {
+        dom.statFirstTryPct.textContent = "—";
+        dom.statFirstTryFraction.textContent = "0 of 0 attempted";
+      } else {
+        const pct = Math.round((firstTryWins / totalAttempted) * 100);
+        dom.statFirstTryPct.textContent = `${pct}%`;
+        dom.statFirstTryFraction.textContent = `${firstTryWins} of ${totalAttempted} on 1st try`;
+      }
+
+      const deckTotal = state.deck.length;
+      const deckCompleted = state.deck.filter((c) => getCardStat(c.id).completed).length;
+      const remaining = Math.max(0, deckTotal - deckCompleted);
+
+      dom.statCompleted.textContent = `${deckCompleted} / ${deckTotal}`;
+      dom.statRemaining.textContent = `${remaining} remaining`;
+
+      dom.statStreak.textContent = `${state.currentStreak}`;
+      dom.statBestStreak.textContent = `Best: ${state.bestStreak}`;
+
+      const solvedByUserCount = allAttemptedIds.filter(
+        (id) => state.cardStats[id].completed && !state.cardStats[id].revealed
+      ).length;
+
+      if (totalAttempted === 0) {
+        dom.statActualScore.textContent = "—";
+        dom.statActualFraction.textContent = "0 of 0 correct";
+      } else {
+        const actualPct = Math.round((solvedByUserCount / totalAttempted) * 100);
+        dom.statActualScore.textContent = `${actualPct}%`;
+        dom.statActualFraction.textContent = `${solvedByUserCount} of ${totalAttempted} correct`;
+      }
+
+      const progressPct =
+        deckTotal > 0 ? Math.round((deckCompleted / deckTotal) * 100) : 0;
+      dom.progressBarFill.style.width = `${progressPct}%`;
+      dom.progressBarTrack.setAttribute("aria-valuenow", progressPct);
+
+      const totalMissedIds = allAttemptedIds.filter(
+        (id) => state.cardStats[id].firstTryCorrect === false
+      );
+      dom.missedCountBadge.textContent = totalMissedIds.length;
+      if (totalMissedIds.length > 0 && !state.practiceMissedOnly) {
+        dom.btnPracticeMissed.style.display = "inline-block";
+      } else if (totalMissedIds.length === 0) {
+        dom.btnPracticeMissed.style.display = "none";
+      }
+    }
+
+    /**
+     * ==========================================================================
+     * EVENT LISTENERS
+     * ==========================================================================
+     */
+    // Mode Bar (All / Direct Translation / Sequences & Logic / Mini-Dialogues)
+    dom.modeBar.addEventListener("click", (e) => {
+      const btn = e.target.closest(".mode-btn");
+      if (!btn) return;
+      document.querySelectorAll(".mode-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.practiceMissedOnly = false;
+      dom.btnPracticeMissed.classList.remove("active-mode");
+      state.activeMode = btn.dataset.mode;
+      buildDeck();
+    });
+
+    // Thematic Topic Pills
+    dom.filterTabs.addEventListener("click", (e) => {
+      const tab = e.target.closest(".tab-btn");
+      if (!tab) return;
+      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+      tab.classList.add("active");
+      state.practiceMissedOnly = false;
+      dom.btnPracticeMissed.classList.remove("active-mode");
+      state.activeTopic = tab.dataset.topic;
+      buildDeck();
+    });
+
+    // Toggle Multiple Choice vs Typing Mode
+    dom.btnInputMode.addEventListener("click", () => {
+      state.isTypingMode = !state.isTypingMode;
+      dom.btnInputMode.classList.toggle("active-mode", state.isTypingMode);
+      dom.btnInputMode.textContent = state.isTypingMode
+        ? "⌨️ Mode: Typing"
+        : "🔤 Mode: Multiple Choice";
+      renderCurrentCard();
+    });
+
+    // Shuffle Toggle
+    dom.btnShuffle.addEventListener("click", () => {
+      state.isShuffled = !state.isShuffled;
+      dom.btnShuffle.classList.toggle("active-mode", state.isShuffled);
+      dom.btnShuffle.textContent = state.isShuffled ? "🔀 Shuffle: On" : "🔀 Shuffle: Off";
+      buildDeck();
+    });
+
+    // Practice Missed Mode
+    dom.btnPracticeMissed.addEventListener("click", () => {
+      state.practiceMissedOnly = !state.practiceMissedOnly;
+      dom.btnPracticeMissed.classList.toggle("active-mode", state.practiceMissedOnly);
+      buildDeck();
+    });
+
+    dom.btnSummaryPracticeMissed.addEventListener("click", () => {
+      state.practiceMissedOnly = true;
+      dom.btnPracticeMissed.classList.add("active-mode");
+      buildDeck();
+    });
+
+    // Reset All
+    function resetAll() {
+      state.cardStats = {};
+      state.currentStreak = 0;
+      state.bestStreak = 0;
+      state.practiceMissedOnly = false;
+      dom.btnPracticeMissed.classList.remove("active-mode");
+      buildDeck();
+    }
+
+    dom.btnReset.addEventListener("click", resetAll);
+    dom.btnSummaryRestart.addEventListener("click", resetAll);
+
+    // Optional English Hint Button
+    dom.btnShowHint.addEventListener("click", () => {
+      dom.btnShowHint.style.display = "none";
+      dom.hintText.style.display = "inline-block";
+    });
+
+    // Spanish Accent Buttons
+    document.querySelectorAll(".accent-btn").forEach((btn) => {
+      btn.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        const char = btn.dataset.char;
+        const start = dom.answerInput.selectionStart ?? dom.answerInput.value.length;
+        const end = dom.answerInput.selectionEnd ?? dom.answerInput.value.length;
+        dom.answerInput.value =
+          dom.answerInput.value.slice(0, start) + char + dom.answerInput.value.slice(end);
+        dom.answerInput.focus();
+        dom.answerInput.setSelectionRange(start + 1, start + 1);
+      });
+    });
+
+    // Card Controls
+    dom.btnPrev.addEventListener("click", goPrev);
+    dom.btnCheck.addEventListener("click", checkTypedAnswer);
+    dom.btnReveal.addEventListener("click", revealAnswer);
+    dom.btnNext.addEventListener("click", goNext);
+
+    // Keyboard shortcuts (1-4 for Multiple Choice, Enter to Check/Advance)
+    document.addEventListener("keydown", (e) => {
+      if (dom.summaryScreen.classList.contains("visible")) return;
+
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (state.isTypingMode) {
+          if (state.cardSolvedOnScreen) {
+            goNext();
+          } else {
+            checkTypedAnswer();
+          }
+        } else if (state.cardSolvedOnScreen) {
+          goNext();
+        }
+        return;
+      }
+
+      if (!state.isTypingMode && ["1", "2", "3", "4"].includes(e.key)) {
+        const idx = parseInt(e.key, 10) - 1;
+        const buttons = dom.mcContainer.querySelectorAll(".mc-option");
+        if (buttons[idx] && !buttons[idx].disabled) {
+          buttons[idx].click();
+        }
+      }
+    });
+
+    // Initialize immediately on load
+    buildDeck();
+  </script>
+</body>
+</html>
